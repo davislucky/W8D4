@@ -1,3 +1,6 @@
+const readline = require("readline");
+
+
 class Clock {
     constructor() {
       // 1. Create a Date object.
@@ -32,6 +35,8 @@ class Clock {
   
 //   const clock = new Clock();
 
+// ----------------------------------------------------------------------
+
 function addNumbers(sum, numsLeft, completionCallback) {
     if (numsLeft > 0) {
         const response = rl.question("Input number", answer => {
@@ -45,13 +50,15 @@ function addNumbers(sum, numsLeft, completionCallback) {
         rl.close();
     }
 }
-// const readline = require("readline");
 // const rl = readline.createInterface({
 //     input: process.stdin,
 //     output: process.stdout
 // });
 
 // addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
+
+// ----------------------------------------------------------------------
+
 
 Function.prototype.myBind = function(context) {
     // console.log(this)
@@ -82,3 +89,24 @@ class Lamp {
   
   boundTurnOn(); // should say "Turning on a lamp"
   myBoundTurnOn(); // should say "Turning on a lamp"
+
+// ----------------------------------------------------------------------
+
+function absurdBubbleSort(arr, sortCompletionCallback){
+
+}
+
+function askIfGreaterThan(el1, el2, callback){
+  const response = rl.question(`Is ${el1} > ${el2}?`, answer =>{
+    if ( answer === "yes"){
+      callback(true)
+    }else {
+      callback(false)
+    }
+  })
+}
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
