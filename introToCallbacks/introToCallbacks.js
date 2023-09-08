@@ -141,15 +141,15 @@ Function.prototype.myThrottle = function (interval) {
 
 Function.prototype.myDebounce = function (interval) {
   let debounced;
+  let func = this
+  return function (){
+    console.log(this)
+    clearTimeout(debounced)
+    debounced = setTimeout(()=>{
+      func.apply(this)
+    },interval)
 
-  let superDebounced = function() {
-    debounced = (...args) => {
-    this(...args);
-    }
-  return setTimeout(debounced, interval); 
   }
-  
-  return superDebounced;
 }
 
 class SearchBar {
@@ -158,7 +158,7 @@ class SearchBar {
 
     this.type = this.type.bind(this);
     // this.search = this.search.bind(this);
-    this.search = this.search.bind(this).myDebounce(3000);
+    this.search = this.search.myDebounce(3000).bind(this);
     // this.search = this.search.myDebounce(500).bind(this);
   }
 
