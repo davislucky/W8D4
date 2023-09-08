@@ -70,43 +70,122 @@ Function.prototype.myBind = function(context) {
 
     return func;
 }
-class Lamp {
-    constructor() {
-      this.name = "a lamp";
-    }
-  }
+// class Lamp {
+//     constructor() {
+//       this.name = "a lamp";
+//     }
+//   }
   
-  const turnOn = function() {
-    console.log("Turning on " + this.name);
-  };
+//   const turnOn = function() {
+//     console.log("Turning on " + this.name);
+//   };
   
-  const lamp = new Lamp();
+//   const lamp = new Lamp();
   
-//   turnOn(); // should not work the way we want it to
+// //   turnOn(); // should not work the way we want it to
   
-  const boundTurnOn = turnOn.bind(lamp);
-  const myBoundTurnOn = turnOn.myBind(lamp);
+//   const boundTurnOn = turnOn.bind(lamp);
+//   const myBoundTurnOn = turnOn.myBind(lamp);
   
-  boundTurnOn(); // should say "Turning on a lamp"
-  myBoundTurnOn(); // should say "Turning on a lamp"
+//   boundTurnOn(); // should say "Turning on a lamp"
+//   myBoundTurnOn(); // should say "Turning on a lamp"
 
 // ----------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------
 
-function absurdBubbleSort(arr, sortCompletionCallback){
+Function.prototype.myThrottle = function (interval) {
+  let tooSoon = false;
 
-}
+  const func = () => { 
+      if (tooSoon === false) {
+      tooSoon = true;
 
-function askIfGreaterThan(el1, el2, callback){
-  const response = rl.question(`Is ${el1} > ${el2}?`, answer =>{
-    if ( answer === "yes"){
-      callback(true)
-    }else {
-      callback(false)
+      setTimeout(() => {
+        tooSoon = false;
+      }, interval);
+
+      this(interval);
     }
-  })
+  }
+  return func;
 }
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+// class Neuron {
+//   constructor() {
+//     this.fire = this.fire.myThrottle(3000);
+//   }
+
+//   fire() {
+//     console.log("Firing!");
+//   }
+// }
+
+// const neuron = new Neuron();
+
+// // const interval = setInterval(() => {
+// //   neuron.fire();
+// // }, 10);
+
+
+// // clearInterval(interval);
+
+
+
+// // neuron.fire = neuron.fire.myThrottle(3000);
+
+// const interval = setInterval(() => {
+//   neuron.fire();
+// }, 10);
+
+// ----------------------------------------------------------------------------------------------------
+
+Function.prototype.myDebounce = function (interval) {
+  let debounced;
+
+  let superDebounced = function() {
+    debounced = (...args) => {
+    this(...args);
+    }
+  return setTimeout(debounced, interval); 
+  }
+  
+  return superDebounced;
+}
+
+class SearchBar {
+  constructor() {
+    this.query = "";
+
+    this.type = this.type.bind(this);
+    // this.search = this.search.bind(this);
+    this.search = this.search.bind(this).myDebounce(3000);
+    // this.search = this.search.myDebounce(500).bind(this);
+  }
+
+  type(letter) {
+    this.query += letter;
+    this.search();
+  }
+
+  search() {
+    console.log(`searching for ${this.query}`);
+  }
+}
+
+const searchBar = new SearchBar();
+
+const queryForHelloWorld = () => {
+  searchBar.type("h");
+  searchBar.type("e");
+  searchBar.type("l");
+  searchBar.type("l");
+  searchBar.type("o");
+  searchBar.type(" ");
+  searchBar.type("w");
+  searchBar.type("o");
+  searchBar.type("r");
+  searchBar.type("l");
+  searchBar.type("d");
+};
+
+queryForHelloWorld();
